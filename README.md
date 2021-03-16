@@ -1,4 +1,6 @@
 # Go-Bit! Sample Code
+* [shieldnet/gobit](https://github.com/shieldnet/gobit)를 이용한 Upbit 코인 자동 매매 프로그램 샘플 코드입니다.
+
 ## How to use?
 * `go`를 설치합니다. [Download and install go](https://golang.org/doc/install)
 * `${GOPATH}/src/github.com/shieldnet` 디렉토리를 만들어줍니다.
