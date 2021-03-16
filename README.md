@@ -1,15 +1,15 @@
 # Go-Bit! Sample Code
 ## How to use?
-* `go.mod` 파일에 `github.com/shieldnet/gobit`를 추가해줍니다.
 * `go`를 설치합니다. [Download and install go](https://golang.org/doc/install)
 * `${GOPATH}/src/github.com/shieldnet` 디렉토리를 만들어줍니다.
   * fork나 clone해서 사용하시는 경우, `${GOPATH}/src/github.com/<your_name>` 디렉토리를 만들어줍니다.
 * `cd gobit-sample`을 통해 gobit 폴더로 이동해줍니다.
 * `go get` 명령어를 실행해 `go.mod`의 패키지를 다운로드해줍니다.
+  * go mod require의 `github.com/shieldnet/gobit`의 버전이 다를 수 있습니다. 참고하시기 바랍니다.
 * [Upbit OpenAPI 관리](https://upbit.com/mypage/open_api_management) 페이지에서 Open API Key를 발급받습니다.
   * SecretKey는 발급받은 직후가 아니면 다시 볼 수 없습니다. 주의하시기 바랍니다.
-* `main.go`폴더의 keys에 발급받은 SecretKey와 AccessKey를 입력해 
-  * **주의 : 발급받은 key를 github이나 다른 웹 상의 다른 공개된 장소에 업로드 하지 않도록 주의하세요.**
+* `main.go`폴더의 keys에 발급받은 SecretKey와 AccessKey를 입력합니다.
+  * **주의 : 발급받은 key를 github이나 다른 웹 상의 다른 공개된 장소에 업로드 하지 않도록 주의합니다.**
 * 전략을 본인의 취향에 맞게 수정합니다.
   * 참고) 현재 코드에 작성된 전략은 다음과 같습니다.
     * 2% 손해 보면 손절
