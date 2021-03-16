@@ -9,6 +9,7 @@ package strategy
 
 import (
 	"github.com/shieldnet/gobit/api"
+	"github.com/shieldnet/gobit/jwtmaker"
 	"log"
 	"strconv"
 	"strings"
@@ -34,6 +35,7 @@ type Strategy struct {
 	QuitRate      float64
 	Balance       string
 	TotalPrice    string
+	Key           jwtmaker.Keys
 }
 
 func (s *Strategy) Execute(wait *sync.WaitGroup) {
@@ -61,7 +63,7 @@ func (s *Strategy) BuyCheck() {
 	candles := api.GetMinuteCandle(3, s.BuyCandleNum, s.Market)
 	nowTradeValue := candles[0].TradePrice
 	if isHighestTradeValue(nowTradeValue, candles) {
-		log.Println("[BuyCheck] "+ strconv.Itoa(s.BuyCandleNum) +"개중 최고가이므로 구매" + s.Market)
+		log.Println("[BuyCheck] " + strconv.Itoa(s.BuyCandleNum) + "개중 최고가이므로 구매" + s.Market)
 		s.NextState = "Buy"
 		return
 	}
@@ -73,7 +75,7 @@ func (s *Strategy) BuyCheck() {
 
 func (s *Strategy) Buy() {
 	log.Println("[Buy] 구매를 시작합니다." + s.Market)
-	api.BuyOrderByMarketPrice(s.Market, s.TotalPrice)
+	api.BuyOrderByMarketPrice(s.Market, s.TotalPrice, s.Key)
 	time.Sleep(SleepInterval * time.Millisecond)
 	s.NextState = "SellCheck"
 	return
@@ -83,7 +85,7 @@ func (s *Strategy) SellCheck() {
 	log.Println("[SellCheck] 주식을 팔지 말지 생각해봅니다." + s.Market)
 
 	candles := api.GetMinuteCandle(s.CandleUnit, s.SellCandleNum, s.Market)
-	accounts := api.GetAccountInfo()
+	accounts := api.GetAccountInfo(s.Key)
 	nowTradeValue := candles[0].TradePrice
 	avgBuyPrice := 0.0
 	for _, account := range accounts {
@@ -101,7 +103,7 @@ func (s *Strategy) SellCheck() {
 		return
 	}
 	if isLowestTradeValue(nowTradeValue, candles) {
-		log.Println("[SellCheck] "+ strconv.Itoa(s.SellCandleNum) +"개중 최저가이므로 판매합니다." + s.Market)
+		log.Println("[SellCheck] " + strconv.Itoa(s.SellCandleNum) + "개중 최저가이므로 판매합니다." + s.Market)
 		s.NextState = "Sell"
 		return
 	}
@@ -112,7 +114,7 @@ func (s *Strategy) SellCheck() {
 }
 
 func (s *Strategy) Sell() {
-	api.SellOrderByMarketPrice(s.Market, s.Balance)
+	api.SellOrderByMarketPrice(s.Market, s.Balance, s.Key)
 	s.NextState = "Init"
 	return
 }
