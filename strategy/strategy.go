@@ -62,8 +62,8 @@ func (s *Strategy) Init() {
 func (s *Strategy) BuyCheck() {
 	candles := api.GetMinuteCandle(3, s.BuyCandleNum, s.Market)
 	nowTradeValue := candles[0].TradePrice
-	if isHighestTradeValue(nowTradeValue, candles) {
-		log.Println("[BuyCheck] " + strconv.Itoa(s.BuyCandleNum) + "개중 최고가이므로 구매" + s.Market)
+	if isLowestTradeValue(nowTradeValue, candles) {
+		log.Println("[BuyCheck] " + strconv.Itoa(s.BuyCandleNum) + "개중 최저가이므로 구매" + s.Market)
 		s.NextState = "Buy"
 		return
 	}
@@ -102,8 +102,8 @@ func (s *Strategy) SellCheck() {
 		s.NextState = "Sell"
 		return
 	}
-	if isLowestTradeValue(nowTradeValue, candles) {
-		log.Println("[SellCheck] " + strconv.Itoa(s.SellCandleNum) + "개중 최저가이므로 판매합니다." + s.Market)
+	if isHighestTradeValue(nowTradeValue, candles) {
+		log.Println("[SellCheck] " + strconv.Itoa(s.SellCandleNum) + "개중 최고가이므로 판매합니다." + s.Market)
 		s.NextState = "Sell"
 		return
 	}
