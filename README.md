@@ -31,3 +31,9 @@
 
 ## Contribution
 * 기본적으로, 개인 프로젝트이기 때문에 Contribution은 받지 않습니다만, 버그나 기능 추가에 관한 Issue는 환영하고 있습니다.
+* 질문이나 버그는 이슈로 달아주시거나, 개발자 이메일 (atez.dev@gmail.com)으로 보내주시기 바랍니다.
+
+## FAQ
+### 거래가 너무 느려요!!
+* 기본적으로 upbit에는 API call 횟수 제한이 있기 때문에 각 단계 별 요청을 보내는데 시간이 조금 걸리게 해두었습니다. `strategy/condition.go` 에서 ` IntervalTime`을 바꿔주시면 속도를 바꾸실 수 있습니다.
+
